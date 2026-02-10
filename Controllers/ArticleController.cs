@@ -6,6 +6,10 @@ using Umbraco.Cms.Web.Common.Controllers;
 
 namespace ContentManagementSystem.Controllers
 {
+  /// <summary>
+  /// Controller for the Article Document Type.
+  /// Maps the IPublishedContent to a strongly-typed ArticleViewModel.
+  /// </summary>
   public class ArticleController : RenderController
   {
     public ArticleController(

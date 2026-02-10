@@ -6,6 +6,10 @@ namespace ContentManagementSystem.Models
 {
   public class ArticleViewModel : ContentModel
   {
+    /// <summary>
+    /// ViewModel representing an Article page. 
+    /// Provides strongly-typed properties to avoid using "magic strings" in Razor views.
+    /// </summary>
     public ArticleViewModel(IPublishedContent content) : base(content) { }
 
     public string Title => Content.Value<string>("title") ?? string.Empty;

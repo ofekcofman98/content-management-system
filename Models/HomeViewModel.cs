@@ -1,15 +1,13 @@
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
-using Umbraco.Cms.Core.Strings;
-using Umbraco.Extensions;
 
 namespace ContentManagementSystem.Models
 {
   public class HomeViewModel : ContentModel
   {
     /// <summary>
-    /// ViewModel for the Home Page, extending the standard Umbraco ContentModel.
-    /// Used to pass CMS data alongside calculated search results.
+    /// ViewModel for the Home Page.
+    /// Encapsulates site metadata and search results for a clean, type-safe view implementation.
     /// </summary>
     public HomeViewModel(IPublishedContent content) : base(content) { }
 

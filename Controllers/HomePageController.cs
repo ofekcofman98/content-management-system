@@ -1,19 +1,18 @@
 using ContentManagementSystem.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
-using MimeKit.Cryptography;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.Common.Controllers;
-using ContentManagementSystem.Models;
 
 namespace ContentManagementSystem.Controllers
 {
+  /// <summary>
+  /// Controller for the Home Page. 
+  /// Handles the "Route Hijacking" to provide a custom ViewModel and search logic.
+  /// </summary>
   public class HomePageController : RenderController
   {
-    private readonly IPublishedValueFallback _fallback;
-
     public HomePageController(
             ILogger<HomePageController> logger,
             ICompositeViewEngine compositeViewEngine,
@@ -32,6 +31,8 @@ namespace ContentManagementSystem.Controllers
         SearchResults = CurrentPage!.Children
                           .Where(x => x.ContentType.Alias == "article" &&
                                  (string.IsNullOrEmpty(query) || x.Name.Contains(query, StringComparison.OrdinalIgnoreCase)))
+                          ?? Enumerable.Empty<IPublishedContent>()
+
       };
 
       return CurrentTemplate(model);
