@@ -1,0 +1,24 @@
+@using ContentManagementSystem.Models
+@using Umbraco.Cms.Core.Models
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ArticleViewModel>
+@{
+    Layout = "Shared/_Layout.cshtml";
+}
+
+
+<a href="/">← Back to Home</a>
+
+<article>
+    <h1>@Model.Title</h1>
+    <p><em>Written by: @Model.Author</em></p>
+
+    @if (Model.HeroImage != null)
+    {
+        <img src="@Model.HeroImage.MediaUrl()" alt="@Model.Title" style="max-width: 100%; height: auto;" />
+    }
+
+    <div class="content">
+        @Html.Raw(Model.ArticleContent)
+    </div>
+</article>

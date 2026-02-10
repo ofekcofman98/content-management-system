@@ -1,0 +1,33 @@
+﻿@using ContentManagementSystem.Models
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<HomeViewModel>
+@{
+    Layout = "Shared/_Layout.cshtml";
+}
+
+<header>
+    <h1>@Model.SiteName</h1>
+    <p>@Model.SiteDescription</p>
+</header>
+
+<form method="get">
+    <input type="text" name="query" value="@Model.SearchQuery" placeholder="Search articles..." />
+    <button type="submit">Search</button>
+</form>
+
+<section>
+    <h2>Articles</h2>
+    @if (Model.SearchResults.Any())
+    {
+        <ul>
+            @foreach (var article in Model.SearchResults)
+            {
+                <li><a href="@article.Url()">@article.Name</a></li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No results found for "@Model.SearchQuery".</p>
+    }
+</section>
