@@ -1,6 +1,10 @@
 using ContentManagementSystem.Models;
+using ContentManagementSystem.Models.ViewModels;
+using ContentManagementSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.Extensions.Options;
+using Umbraco.Cms.Core.Media.EmbedProviders;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.Common.Controllers;
@@ -13,26 +17,47 @@ namespace ContentManagementSystem.Controllers
   /// </summary>
   public class HomePageController : RenderController
   {
+    private readonly IArticleSearchService _searchService;
+    private readonly ArticleSettings _settings;
+
     public HomePageController(
             ILogger<HomePageController> logger,
             ICompositeViewEngine compositeViewEngine,
-            IUmbracoContextAccessor umbracoContextAccessor) 
+            IUmbracoContextAccessor umbracoContextAccessor,
+            IArticleSearchService searchService,
+            IOptions<ArticleSettings> settings) 
       : base(logger, compositeViewEngine, umbracoContextAccessor)
     {
-    }
+      _searchService = searchService;
+      _settings = settings.Value;
+    } 
 
     public override IActionResult Index()
     {
-      var query = Request.Query["query"].ToString();
+      if (CurrentPage == null)
+      {
+        return NotFound();
+      } // Null check on CurrentPage – returns 404 instead of crashing
+
+      var query = Request.Query["query"].ToString().Trim(); // .Trim() on query – prevents whitespace-only searches
+      int.TryParse(Request.Query["page"], out int page);
+
+      var articles = _searchService.GetArticles(CurrentPage);
+      articles = _searchService.Search(articles, query);
+
+      int totalItems = articles.Count();
+      var pagedArticles = _searchService.Paginate(articles, page, _settings.PageSize);
 
       var model = new HomeViewModel(CurrentPage!)
       {
         SearchQuery = query,
-        SearchResults = CurrentPage!.Children
-                          .Where(x => x.ContentType.Alias == "article" &&
-                                 (string.IsNullOrEmpty(query) || x.Name.Contains(query, StringComparison.OrdinalIgnoreCase)))
-                          ?? Enumerable.Empty<IPublishedContent>()
-
+        SearchResults = pagedArticles.Select(x => new ArticleViewModel(x)),
+        Pagination = new PaginationInfo
+        {
+          PageNumber = page,
+          PageSize = _settings.PageSize,
+          TotalItems = totalItems
+        }
       };
 
       return CurrentTemplate(model);

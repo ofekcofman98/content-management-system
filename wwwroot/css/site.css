@@ -1,0 +1,109 @@
+body {
+  font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  padding: 20px;
+  color: #333;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+  button:hover {
+    background: #0056b3;
+  }
+
+article {
+  margin-top: 30px;
+}
+
+img {
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+article img {
+  max-width: 100%;
+  height: auto;
+}
+
+.search-form {
+  margin: 20px 0;
+}
+
+.article-list {
+  list-style: none;
+  padding: 0;
+}
+
+  .article-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+    .article-list li a {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 1.1em;
+    }
+
+      .article-list li a:hover {
+        text-decoration: underline;
+      }
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.no-results {
+  color: #888;
+  font-style: italic;
+}
+
+
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  gap: 8px;
+}
+
+.page-link {
+  padding: 6px 12px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+  .page-link:hover {
+    background: #007bff;
+    color: white;
+  }
+
+.page-current {
+  padding: 6px 12px;
+  background: #007bff;
+  color: white;
+  border-radius: 4px;
+}

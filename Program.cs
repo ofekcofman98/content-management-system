@@ -1,3 +1,6 @@
+using ContentManagementSystem.Models;
+using ContentManagementSystem.Services;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.CreateUmbracoBuilder()
@@ -5,6 +8,9 @@ builder.CreateUmbracoBuilder()
     .AddWebsite()
     .AddComposers()
     .Build();
+
+builder.Services.AddScoped<IArticleSearchService, ArticleSearchService>();
+builder.Services.Configure<ArticleSettings>(builder.Configuration.GetSection("ArticleSettings"));
 
 WebApplication app = builder.Build();
 

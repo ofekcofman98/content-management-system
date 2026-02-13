@@ -1,4 +1,5 @@
-﻿@using ContentManagementSystem.Models
+@using ContentManagementSystem.Models
+@using ContentManagementSystem.Models.ViewModels
 @using Umbraco.Extensions
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<HomeViewModel>
 @{
@@ -10,7 +11,7 @@
     <p>@Model.SiteDescription</p>
 </header>
 
-<form method="get">
+<form method="get" class="search-form">
     <input type="text" name="query" value="@Model.SearchQuery" placeholder="Search articles..." />
     <button type="submit">Search</button>
 </form>
@@ -19,15 +20,32 @@
     <h2>Articles</h2>
     @if (Model.SearchResults.Any())
     {
-        <ul>
+        <ul class="article-list">
             @foreach (var article in Model.SearchResults)
             {
-                <li><a href="@article.Url()">@article.Name</a></li>
+                <li><a href="@article.Url">@article.Title</a></li>
             }
         </ul>
+
+        @if (Model.Pagination.TotalItems > 1)
+        {
+            <nav class="pagination">
+              @for (int i = 1; i <= Model.Pagination.TotalPages; i++)
+                {
+                    @if (i == Model.Pagination.PageNumber)
+                    {
+                        <span class="page-current">@i</span>
+                    }
+                    else
+                    {
+                        <a href="?query=@Model.SearchQuery&page=@i" class="page-link">@i</a>
+                    }
+                }
+            </nav>
+        }
     }
     else
     {
-        <p>No results found for "@Model.SearchQuery".</p>
+        <p class="no-results">No results found for "@Model.SearchQuery".</p>
     }
 </section>

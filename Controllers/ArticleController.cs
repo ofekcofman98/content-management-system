@@ -1,4 +1,4 @@
-using ContentManagementSystem.Models;
+using ContentManagementSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Umbraco.Cms.Core.Web;
@@ -22,7 +22,12 @@ namespace ContentManagementSystem.Controllers
 
     public override IActionResult Index()
     {
-      var viewModel = new ArticleViewModel(CurrentPage!);
+      if (CurrentPage == null)
+      {
+        return NotFound();
+      }
+
+      var viewModel = new ArticleViewModel(CurrentPage);
 
       return CurrentTemplate(viewModel);
     }

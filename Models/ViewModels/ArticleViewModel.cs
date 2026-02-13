@@ -2,9 +2,9 @@ using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Strings;
 
-namespace ContentManagementSystem.Models
+namespace ContentManagementSystem.Models.ViewModels
 {
-  public class ArticleViewModel : ContentModel
+  public class ArticleViewModel : BaseViewModel
   {
     /// <summary>
     /// ViewModel representing an Article page. 
@@ -16,5 +16,6 @@ namespace ContentManagementSystem.Models
     public string Author => Content.Value<string>("authorName") ?? string.Empty;
     public MediaWithCrops? HeroImage => Content.Value<MediaWithCrops>("heroImage");
     public IHtmlEncodedString? ArticleContent => Content.Value<IHtmlEncodedString>("content");
+    public string Url => Content.Url() ?? string.Empty;
   }
 }

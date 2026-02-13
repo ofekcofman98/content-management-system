@@ -1,9 +1,9 @@
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 
-namespace ContentManagementSystem.Models
+namespace ContentManagementSystem.Models.ViewModels
 {
-  public class HomeViewModel : ContentModel
+  public class HomeViewModel : BaseViewModel
   {
     /// <summary>
     /// ViewModel for the Home Page.
@@ -13,8 +13,9 @@ namespace ContentManagementSystem.Models
 
     public string SiteName => Content.Value<string>("siteName") ?? string.Empty;
     public string SiteDescription => Content.Value<string>("siteDescription") ?? string.Empty;
-
     public string? SearchQuery { get; set; }
-    public IEnumerable<IPublishedContent> SearchResults { get; set; } = Enumerable.Empty<IPublishedContent>();
+    public IEnumerable<ArticleViewModel> SearchResults { get; set; } = Enumerable.Empty<ArticleViewModel>();
+
+    public PaginationInfo Pagination { get; set; } = new();
   }
 }
