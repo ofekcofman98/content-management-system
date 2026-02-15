@@ -37,9 +37,9 @@ namespace ContentManagementSystem.Controllers
       if (CurrentPage == null)
       {
         return NotFound();
-      } // Null check on CurrentPage – returns 404 instead of crashing
+      }
 
-      var query = Request.Query["query"].ToString().Trim(); // .Trim() on query – prevents whitespace-only searches
+      var query = Request.Query["query"].ToString().Trim(); 
       int.TryParse(Request.Query["page"], out int page);
 
       var articles = _searchService.GetArticles(CurrentPage);

@@ -18,13 +18,13 @@ namespace ContentManagementSystem.Services
       {
         if (homePage == null) return Enumerable.Empty<IPublishedContent>();
 
-        var children = homePage.Children() ?? Enumerable.Empty<IPublishedContent>(); // Null check on Children – if no children exist, use empty collection
+        var children = homePage.Children() ?? Enumerable.Empty<IPublishedContent>(); 
         return children.Where(x => x.ContentType.Alias == "article");
       }
       catch (Exception ex)
       {
         _logger.LogError(ex, "Error fetching articles from home page with ID {HomePageId}", homePage.Id);
-        return Enumerable.Empty<IPublishedContent>(); // Return empty collection on error instead of crashing
+        return Enumerable.Empty<IPublishedContent>();
       }
     }
 

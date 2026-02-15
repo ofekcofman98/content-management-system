@@ -12,7 +12,5 @@ namespace ContentManagementSystem.Models
     public int PageSize { get; set; } = 5;
     public int TotalItems { get; set; }
     public int TotalPages => (int)Math.Ceiling(TotalItems / (double)PageSize);
-    public bool HasPrevious => PageNumber > 1;
-    public bool HasNext => PageNumber < TotalPages;
   }
 }
